@@ -15,6 +15,7 @@ import { Route as MembersRouteImport } from './routes/members'
 import { Route as MealSummaryRouteImport } from './routes/meal-summary'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as ExpenseRouteImport } from './routes/expense'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BackupRouteImport } from './routes/backup'
 import { Route as AttendanceRouteImport } from './routes/attendance'
@@ -50,6 +51,11 @@ const InventoryRoute = InventoryRouteImport.update({
   path: '/inventory',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ExpenseRoute = ExpenseRouteImport.update({
+  id: '/expense',
+  path: '/expense',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/attendance': typeof AttendanceRoute
   '/backup': typeof BackupRoute
   '/dashboard': typeof DashboardRoute
+  '/expense': typeof ExpenseRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
   '/meal-summary': typeof MealSummaryRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/attendance': typeof AttendanceRoute
   '/backup': typeof BackupRoute
   '/dashboard': typeof DashboardRoute
+  '/expense': typeof ExpenseRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
   '/meal-summary': typeof MealSummaryRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/attendance': typeof AttendanceRoute
   '/backup': typeof BackupRoute
   '/dashboard': typeof DashboardRoute
+  '/expense': typeof ExpenseRoute
   '/inventory': typeof InventoryRoute
   '/login': typeof LoginRoute
   '/meal-summary': typeof MealSummaryRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/backup'
     | '/dashboard'
+    | '/expense'
     | '/inventory'
     | '/login'
     | '/meal-summary'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/backup'
     | '/dashboard'
+    | '/expense'
     | '/inventory'
     | '/login'
     | '/meal-summary'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/attendance'
     | '/backup'
     | '/dashboard'
+    | '/expense'
     | '/inventory'
     | '/login'
     | '/meal-summary'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   AttendanceRoute: typeof AttendanceRoute
   BackupRoute: typeof BackupRoute
   DashboardRoute: typeof DashboardRoute
+  ExpenseRoute: typeof ExpenseRoute
   InventoryRoute: typeof InventoryRoute
   LoginRoute: typeof LoginRoute
   MealSummaryRoute: typeof MealSummaryRoute
@@ -204,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InventoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/expense': {
+      id: '/expense'
+      path: '/expense'
+      fullPath: '/expense'
+      preLoaderRoute: typeof ExpenseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   AttendanceRoute: AttendanceRoute,
   BackupRoute: BackupRoute,
   DashboardRoute: DashboardRoute,
+  ExpenseRoute: ExpenseRoute,
   InventoryRoute: InventoryRoute,
   LoginRoute: LoginRoute,
   MealSummaryRoute: MealSummaryRoute,

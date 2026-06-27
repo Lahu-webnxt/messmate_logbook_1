@@ -10,6 +10,7 @@ import {
   ChefHat,
   Boxes,
   LogOut,
+  Wallet,
 } from "lucide-react";
 import {
   Sidebar,
@@ -48,6 +49,7 @@ const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "Members", url: "/members", icon: Users },
   { title: "Attendance", url: "/attendance", icon: ClipboardCheck },
+  { title: "Expense", url: "/expense", icon: Wallet },
   { title: "Inventory", url: "/inventory", icon: Boxes },
   { title: "Reports", url: "/reports", icon: FileBarChart },
   { title: "Meal Summary", url: "/meal-summary", icon: Utensils },

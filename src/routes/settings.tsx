@@ -5,7 +5,25 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Moon, Sun, User, Lock, Bell, LogOut, Save, Building2, Mail } from "lucide-react";
+import {
+  Bell,
+  Building2,
+  CalendarDays,
+  CheckCircle2,
+  Clock,
+  Code2,
+  FileBadge,
+  Info,
+  Lock,
+  LogOut,
+  Mail,
+  Moon,
+  Save,
+  Server,
+  ShieldCheck,
+  Sun,
+  User,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/settings")({
@@ -33,6 +51,12 @@ const defaultPrefs: Prefs = {
   lowStock: true,
   weeklyReport: false,
 };
+const currentPlan = "Pro";
+const currentSubscriptionStatus = "Active";
+const subscriptionStartDate = "27 June 2026";
+const subscriptionExpiryDate = "27 June 2027";
+const licenseId = "MM-SUB-1001";
+const lastBackupDate = "27 June 2026";
 
 function SettingsPage() {
   const router = useRouter();
@@ -40,6 +64,7 @@ function SettingsPage() {
   const [profile, setProfile] = useState<Profile>(defaultProfile);
   const [prefs, setPrefs] = useState<Prefs>(defaultPrefs);
   const [pw, setPw] = useState({ current: "", next: "", confirm: "" });
+  const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -54,6 +79,11 @@ function SettingsPage() {
     } catch (e) {
       console.error(e);
     }
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
   }, []);
 
   const toggleTheme = (v: boolean) => {
@@ -257,8 +287,210 @@ function SettingsPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      <section className="mt-6 grid gap-5">
+        <InfoCard
+          title="Software Information"
+          icon={Info}
+          items={[
+            { label: "Software Name", value: "MessMate" },
+            { label: "Software Version", value: "v1.0.0" },
+            { label: "Build Version", value: "Build 1001" },
+            { label: "Release Date", value: "27 June 2026" },
+            { label: "Company Name", value: "WebNxt" },
+            { label: "Developed By", value: "WebNxt" },
+          ]}
+        >
+          <div className="rounded-xl border border-border p-4">
+            <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
+              <Code2 className="h-4 w-4 text-primary" />
+              Technology Stack
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {["React", "Java Spring Boot", "MySQL"].map((technology) => (
+                <span
+                  key={technology}
+                  className="rounded-md bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary"
+                >
+                  {technology}
+                </span>
+              ))}
+            </div>
+          </div>
+        </InfoCard>
+
+        <section className="grid gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+          <SectionTitle title="SaaS Subscription" icon={ShieldCheck} />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <OptionGroup
+              label="Plan Tier"
+              options={["Basic", "Pro", "Enterprise"]}
+              current={currentPlan}
+            />
+            <OptionGroup
+              label="Subscription Status"
+              options={["Active", "Expired", "Trial"]}
+              current={currentSubscriptionStatus}
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <InfoTile
+              icon={CalendarDays}
+              label="Subscription Start Date"
+              value={subscriptionStartDate}
+            />
+            <InfoTile
+              icon={CalendarDays}
+              label="Subscription Expiry Date"
+              value={subscriptionExpiryDate}
+            />
+            <InfoTile icon={Clock} label="Days Remaining" value={`${daysRemaining()} days`} />
+            <InfoTile icon={FileBadge} label="License / Subscription ID" value={licenseId} />
+          </div>
+        </section>
+
+        <InfoCard
+          title="System Information"
+          icon={Server}
+          items={[
+            { label: "Database Status", value: "Connected" },
+            { label: "Current Database Version", value: "MySQL 8.0" },
+            { label: "Last Backup Date", value: lastBackupDate },
+            { label: "Current Logged-in User", value: profile.name || "Admin User" },
+            { label: "Current Date & Time", value: formatDateTime(now) },
+          ]}
+        />
+
+        <section className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+          <SectionTitle title="About MessMate" icon={CheckCircle2} />
+          <p className="mt-4 max-w-4xl text-sm leading-6 text-muted-foreground">
+            MessMate is a smart Mess Management System designed to manage members, attendance,
+            inventory, expenses, billing, reports, backups, and daily mess operations.
+          </p>
+        </section>
+      </section>
     </div>
   );
+}
+
+function SectionTitle({
+  title,
+  icon: Icon,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+}) {
+  return (
+    <div className="flex min-w-0 items-center gap-3">
+      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+        <Icon className="h-5 w-5" />
+      </div>
+      <h2 className="min-w-0 text-base font-semibold">{title}</h2>
+    </div>
+  );
+}
+
+function InfoCard({
+  title,
+  icon,
+  items,
+  children,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  items: { label: string; value: string }[];
+  children?: React.ReactNode;
+}) {
+  return (
+    <section className="grid gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+      <SectionTitle title={title} icon={icon} />
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+        {items.map((item) => (
+          <InfoRow key={item.label} label={item.label} value={item.value} />
+        ))}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+function InfoRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="min-w-0 rounded-xl border border-border p-4">
+      <div className="text-xs font-medium text-muted-foreground">{label}</div>
+      <div className="mt-1 break-words text-sm font-semibold">{value}</div>
+    </div>
+  );
+}
+
+function OptionGroup({
+  label,
+  options,
+  current,
+}: {
+  label: string;
+  options: string[];
+  current: string;
+}) {
+  return (
+    <div className="rounded-xl border border-border p-4">
+      <div className="mb-3 text-xs font-medium text-muted-foreground">{label}</div>
+      <div className="flex flex-wrap gap-2">
+        {options.map((option) => {
+          const active = option === current;
+          return (
+            <span
+              key={option}
+              className={
+                active
+                  ? "rounded-md bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground"
+                  : "rounded-md bg-muted px-2.5 py-1 text-xs font-semibold text-muted-foreground"
+              }
+            >
+              {option}
+            </span>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function InfoTile({
+  icon: Icon,
+  label,
+  value,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  value: string;
+}) {
+  return (
+    <div className="flex min-w-0 gap-3 rounded-xl border border-border p-4">
+      <Icon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+      <div className="min-w-0">
+        <div className="text-xs font-medium text-muted-foreground">{label}</div>
+        <div className="mt-1 break-words text-sm font-semibold">{value}</div>
+      </div>
+    </div>
+  );
+}
+
+function daysRemaining() {
+  const today = new Date();
+  const expiry = new Date(2027, 5, 27);
+  const milliseconds = expiry.getTime() - today.getTime();
+  return Math.max(0, Math.ceil(milliseconds / 86_400_000));
+}
+
+function formatDateTime(date: Date) {
+  return date.toLocaleString("en-IN", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 }
 
 function Field({

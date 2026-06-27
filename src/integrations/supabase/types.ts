@@ -55,6 +55,45 @@ export type Database = {
           },
         ]
       }
+      expenses: {
+        Row: {
+          added_by: string
+          amount: number
+          category: Database["public"]["Enums"]["expense_category"]
+          created_at: string
+          description: string | null
+          expense_date: string
+          id: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          added_by?: string
+          amount: number
+          category: Database["public"]["Enums"]["expense_category"]
+          created_at?: string
+          description?: string | null
+          expense_date?: string
+          id?: string
+          payment_method: Database["public"]["Enums"]["payment_method"]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          added_by?: string
+          amount?: number
+          category?: Database["public"]["Enums"]["expense_category"]
+          created_at?: string
+          description?: string | null
+          expense_date?: string
+          id?: string
+          payment_method?: Database["public"]["Enums"]["payment_method"]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       inventory_items: {
         Row: {
           available_qty: number
@@ -222,9 +261,20 @@ export type Database = {
     }
     Enums: {
       attendance_status: "present" | "absent" | "not_marked"
+      expense_category:
+        | "grocery"
+        | "staff_salary"
+        | "electricity_bill"
+        | "water_bill"
+        | "gas_cylinder"
+        | "maintenance"
+        | "cleaning"
+        | "utensils"
+        | "other"
       inventory_category: "food" | "utensil" | "asset"
       meal_plan: "lunch" | "dinner" | "both"
       movement_type: "stock_in" | "stock_out" | "damage" | "missing"
+      payment_method: "cash" | "upi" | "bank_transfer" | "card"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -353,9 +403,21 @@ export const Constants = {
   public: {
     Enums: {
       attendance_status: ["present", "absent", "not_marked"],
+      expense_category: [
+        "grocery",
+        "staff_salary",
+        "electricity_bill",
+        "water_bill",
+        "gas_cylinder",
+        "maintenance",
+        "cleaning",
+        "utensils",
+        "other",
+      ],
       inventory_category: ["food", "utensil", "asset"],
       meal_plan: ["lunch", "dinner", "both"],
       movement_type: ["stock_in", "stock_out", "damage", "missing"],
+      payment_method: ["cash", "upi", "bank_transfer", "card"],
     },
   },
 } as const

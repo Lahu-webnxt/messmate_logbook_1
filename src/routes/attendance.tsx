@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import {
@@ -232,7 +231,7 @@ function AttendancePage() {
 
           {/* Desktop table */}
           <div className="hidden md:block">
-            <ScrollArea className="max-h-[calc(100vh-340px)]">
+            <div className="max-h-[calc(100vh-340px)] overflow-y-auto">
               <table className="w-full text-sm">
                 <thead className="sticky top-0 z-10 bg-muted/60 text-xs uppercase tracking-wide text-muted-foreground">
                   <tr>
@@ -294,7 +293,7 @@ function AttendancePage() {
                   )}
                 </tbody>
               </table>
-            </ScrollArea>
+            </div>
           </div>
 
           {/* Mobile cards */}
