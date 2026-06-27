@@ -120,7 +120,7 @@ function SettingsPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6">
+    <div className="min-w-0 overflow-x-hidden p-4 sm:p-6">
       <header className="mb-6">
         <h1 className="text-2xl font-bold">Settings</h1>
         <p className="text-sm text-muted-foreground">
@@ -128,8 +128,8 @@ function SettingsPage() {
         </p>
       </header>
 
-      <Tabs defaultValue="profile" className="w-full">
-        <TabsList className="flex w-full flex-wrap justify-start gap-1 bg-muted/60 p-1">
+      <Tabs defaultValue="profile" className="min-w-0 w-full">
+        <TabsList className="flex h-auto min-h-9 w-full flex-wrap justify-start gap-1 bg-muted/60 p-1">
           <TabsTrigger value="profile" className="gap-2">
             <User className="h-4 w-4" />
             Profile
@@ -149,7 +149,7 @@ function SettingsPage() {
         </TabsList>
 
         <TabsContent value="profile" className="mt-5">
-          <div className="grid max-w-2xl gap-5 rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm">
+          <div className="grid min-w-0 max-w-2xl gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
             <h2 className="text-base font-semibold">Profile information</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Full name" icon={User}>
@@ -185,7 +185,7 @@ function SettingsPage() {
                 />
               </Field>
             </div>
-            <div className="flex justify-end">
+            <div className="flex flex-wrap justify-end gap-2">
               <Button onClick={saveProfile} className="gap-2">
                 <Save className="h-4 w-4" /> Save changes
               </Button>
@@ -194,7 +194,7 @@ function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="security" className="mt-5">
-          <div className="grid max-w-xl gap-5 rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm">
+          <div className="grid min-w-0 max-w-xl gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
             <h2 className="text-base font-semibold">Change password</h2>
             <Field label="Current password">
               <Input
@@ -219,7 +219,7 @@ function SettingsPage() {
                 />
               </Field>
             </div>
-            <div className="flex justify-end">
+            <div className="flex flex-wrap justify-end gap-2">
               <Button onClick={changePassword} className="gap-2">
                 <Lock className="h-4 w-4" /> Update password
               </Button>
@@ -237,7 +237,7 @@ function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="notifications" className="mt-5">
-          <div className="grid max-w-2xl gap-3 rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm">
+          <div className="grid min-w-0 max-w-2xl gap-3 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
             <h2 className="text-base font-semibold">Notification preferences</h2>
             <PrefRow
               title="Lunch reminders"
@@ -267,7 +267,7 @@ function SettingsPage() {
         </TabsContent>
 
         <TabsContent value="appearance" className="mt-5">
-          <div className="grid max-w-xl gap-3 rounded-2xl border border-border bg-card p-5 sm:p-6 shadow-sm">
+          <div className="grid min-w-0 max-w-xl gap-3 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
             <div className="flex items-center justify-between gap-4">
               <div className="flex min-w-0 items-center gap-3">
                 {dark ? (
@@ -288,7 +288,7 @@ function SettingsPage() {
         </TabsContent>
       </Tabs>
 
-      <section className="mt-6 grid gap-5">
+      <section className="mt-6 grid min-w-0 gap-5">
         <InfoCard
           title="Software Information"
           icon={Info}
@@ -301,7 +301,7 @@ function SettingsPage() {
             { label: "Developed By", value: "WebNxt" },
           ]}
         >
-          <div className="rounded-xl border border-border p-4">
+          <div className="min-w-0 rounded-xl border border-border p-4">
             <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
               <Code2 className="h-4 w-4 text-primary" />
               Technology Stack
@@ -319,7 +319,7 @@ function SettingsPage() {
           </div>
         </InfoCard>
 
-        <section className="grid gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+        <section className="grid min-w-0 gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
           <SectionTitle title="SaaS Subscription" icon={ShieldCheck} />
           <div className="grid gap-4 lg:grid-cols-2">
             <OptionGroup
@@ -361,7 +361,7 @@ function SettingsPage() {
           ]}
         />
 
-        <section className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+        <section className="min-w-0 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
           <SectionTitle title="About MessMate" icon={CheckCircle2} />
           <p className="mt-4 max-w-4xl text-sm leading-6 text-muted-foreground">
             MessMate is a smart Mess Management System designed to manage members, attendance,
@@ -402,7 +402,7 @@ function InfoCard({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="grid gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
+    <section className="grid min-w-0 gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6">
       <SectionTitle title={title} icon={icon} />
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
         {items.map((item) => (
@@ -433,7 +433,7 @@ function OptionGroup({
   current: string;
 }) {
   return (
-    <div className="rounded-xl border border-border p-4">
+    <div className="min-w-0 rounded-xl border border-border p-4">
       <div className="mb-3 text-xs font-medium text-muted-foreground">{label}</div>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
